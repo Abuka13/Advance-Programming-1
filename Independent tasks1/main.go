@@ -10,8 +10,7 @@ func main() {
 	registry := CourseRegistry.Registry{
 		Student: make(map[uint64]CourseRegistry.Student),
 	}
-
-
+	
 	for {
 		fmt.Println("\nMenu:")
 		fmt.Println("1. Add Student")
