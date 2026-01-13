@@ -19,7 +19,6 @@ func main() {
 	mux.HandleFunc("DELETE /data/{key}", srv.DeleteData)
 	mux.HandleFunc("GET /stats", srv.Stats)
 
-	// Запускаем worker
 	go srv.StartWorker()
 
 	httpServer := &http.Server{
@@ -27,7 +26,6 @@ func main() {
 		Handler: mux,
 	}
 
-	// Запускаем сервер
 	go func() {
 		fmt.Println("Server running on :8080")
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
@@ -35,12 +33,10 @@ func main() {
 		}
 	}()
 
-	// Ждем Ctrl+C
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt)
 	<-stop
 
-	// Останавливаем
 	fmt.Println("Shutting down...")
 	srv.Shutdown()
 
